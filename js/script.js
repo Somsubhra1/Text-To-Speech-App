@@ -28,8 +28,8 @@ const getVoices = () => {
     option.textContent = `${voice.name} (${voice.lang})`;
 
     // set attributes to options
-    option.setAttribute("data-lang", voices.lang);
-    option.setAttribute("data-name", voices.name);
+    option.setAttribute("data-lang", voice.lang);
+    option.setAttribute("data-name", voice.name);
 
     voiceSelect.appendChild(option);
   });
