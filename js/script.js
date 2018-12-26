@@ -2,7 +2,6 @@
 const synth = window.speechSynthesis;
 
 // Grabbing DOM Elements
-
 const textForm = document.querySelector("form");
 const textInput = document.querySelector("#text-input");
 const voiceSelect = document.querySelector("#voice-select");
@@ -12,7 +11,6 @@ const pitch = document.querySelector("#pitch");
 const pitchValue = document.querySelector("#pitch-Value");
 
 // Initialise voices array
-
 let voices = [];
 
 const getVoices = () => {
@@ -35,9 +33,9 @@ const getVoices = () => {
   });
 };
 
+getVoices();
 // the voice list is loaded async to the page. An onvoiceschanged event is fired when they are loaded
 // check if voices are loaded or not
-getVoices();
 if (synth.onvoiceschanged !== undefined) {
   synth.onvoiceschanged = getVoices;
 }
