@@ -8,7 +8,21 @@ const voiceSelect = document.querySelector("#voice-select");
 const rate = document.querySelector("#rate");
 const rateValue = document.querySelector("#rate-value");
 const pitch = document.querySelector("#pitch");
-const pitchValue = document.querySelector("#pitch-Value");
+const pitchValue = document.querySelector("#pitch-value");
+const button = document.querySelector("#speakbtn");
+
+// event listeners
+// form submit
+textForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  speak();
+});
+// rate change
+rate.addEventListener('change', (event) => rateValue.textContent = rate.value);
+// pitch change
+pitch.addEventListener('change', (event) => pitchValue.textContent = pitch.value);
+// after voice selection start speaking automatically
+voiceSelect.addEventListener('change', (event) => speak());
 
 // Initialise voices array
 let voices = [];
@@ -16,7 +30,6 @@ let voices = [];
 const getVoices = () => {
   voices = synth.getVoices();
   // console.log(voices);
-
   // add voices to select list
   voices.forEach(voice => {
     // create options in select list
@@ -39,3 +52,46 @@ getVoices();
 if (synth.onvoiceschanged !== undefined) {
   synth.onvoiceschanged = getVoices;
 }
+
+// speak function
+const speak = () => {
+  // check if already speaking
+  if (synth.speaking) {
+    console.error("Already speaking...");
+    return;
+  }
+  if (textInput.value !== "") {
+    // disabling textInput and button when speaking
+    document.getElementById('text-input').readOnly = true;
+    document.getElementById('speakbtn').disabled = true;
+    // button.disabled = true;
+    // initialising SpeechSynthesisUtterance object
+    const speakText = new SpeechSynthesisUtterance(textInput.value);
+    
+    // after speaking is done
+    speakText.onend = (event) => {
+      console.log('Speaking complete...'); 
+      // enabling textInput and button after speech completion
+      document.getElementById('text-input').readOnly = false;
+      document.getElementById('speakbtn').disabled = false;
+    }    
+    // speak error 
+    speakText.onerror = (event) => {
+      console.error('Something went wrong....');      
+    }
+
+    // voice selection
+    const selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    voices.forEach((voice) => {
+      if (voice.name === selectedVoice) {
+        speakText.voice = voice;
+      }
+    });
+    // setting rate and pitch
+    speakText.rate = rate.value;
+    speakText.pitch = pitch.value;
+
+    // speak
+    synth.speak(speakText);
+  }
+};
