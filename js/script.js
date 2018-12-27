@@ -13,16 +13,19 @@ const button = document.querySelector("#speakbtn");
 
 // event listeners
 // form submit
-textForm.addEventListener('submit', (event) => {
+textForm.addEventListener("submit", event => {
   event.preventDefault();
   speak();
 });
 // rate change
-rate.addEventListener('change', (event) => rateValue.textContent = rate.value);
+rate.addEventListener("change", event => (rateValue.textContent = rate.value));
 // pitch change
-pitch.addEventListener('change', (event) => pitchValue.textContent = pitch.value);
+pitch.addEventListener(
+  "change",
+  event => (pitchValue.textContent = pitch.value)
+);
 // after voice selection start speaking automatically
-voiceSelect.addEventListener('change', (event) => speak());
+voiceSelect.addEventListener("change", event => speak());
 
 // Initialise voices array
 let voices = [];
@@ -62,27 +65,32 @@ const speak = () => {
   }
   if (textInput.value !== "") {
     // disabling textInput and button when speaking
-    document.getElementById('text-input').readOnly = true;
-    document.getElementById('speakbtn').disabled = true;
-    // button.disabled = true;
+    document.getElementById("text-input").readOnly = true;
+    document.getElementById("speakbtn").disabled = true;
+
+    window.utterances = [];
     // initialising SpeechSynthesisUtterance object
-    const speakText = new SpeechSynthesisUtterance(textInput.value);
-    
+    var speakText = new SpeechSynthesisUtterance(textInput.value);
+    // adding to utterances array to prevent garbage values
+    utterances.push(speakText);
+
     // after speaking is done
-    speakText.onend = (event) => {
-      console.log('Speaking complete...'); 
+    speakText.onend = event => {
+      console.log("Speaking complete...");
       // enabling textInput and button after speech completion
-      document.getElementById('text-input').readOnly = false;
-      document.getElementById('speakbtn').disabled = false;
-    }    
-    // speak error 
-    speakText.onerror = (event) => {
-      console.error('Something went wrong....');      
-    }
+      document.getElementById("text-input").readOnly = false;
+      document.getElementById("speakbtn").disabled = false;
+    };
+    // speak error
+    speakText.onerror = event => {
+      console.error("Something went wrong....");
+    };
 
     // voice selection
-    const selectedVoice = voiceSelect.selectedOptions[0].getAttribute('data-name');
-    voices.forEach((voice) => {
+    const selectedVoice = voiceSelect.selectedOptions[0].getAttribute(
+      "data-name"
+    );
+    voices.forEach(voice => {
       if (voice.name === selectedVoice) {
         speakText.voice = voice;
       }
