@@ -103,3 +103,13 @@ const speak = () => {
     synth.speak(speakText);
   }
 };
+
+const browserCheck = () => {
+  if (
+    navigator.userAgent.indexOf("Chrome") === -1 &&
+    navigator.userAgent.indexOf("Safari") === -1 &&
+    navigator.userAgent.indexOf("Firefox") === -1
+  ) {
+    document.getElementById("alertBox").style.display = "block";
+  }
+};

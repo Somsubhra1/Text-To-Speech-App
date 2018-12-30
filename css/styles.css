@@ -16,6 +16,10 @@ body {
   font-size: 3rem;
   color: #fff;
 }
+#alertBox {
+  display: none;
+  display: bl
+}
 @media screen and (max-width: 450px) {
   .heading-text {
     font-size: 2.5rem;

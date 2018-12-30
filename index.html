@@ -22,8 +22,11 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/text-to-speech.png" type="image/x-icon">
   </head>
-  <body class="text-white">
+  <body class="text-white" onload="browserCheck()">
     <div class="container text-center">
+      <div class="alert alert-danger mt-3" role="alert" id="alertBox">
+        <i class="fas fa-exclamation-circle"></i> This App might not work on this browser. Please use Chrome, FireFox or Safari. <i class="fas fa-exclamation-circle"></i>
+      </div>
       <img src="images/text-to-speech.png" alt="Speech img" width="200" height="200" class="mb-3 mt-4">
       <h2 class="mb-4 heading-text">Text-To-Speech</h2>
       <div class="row">
