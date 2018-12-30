@@ -104,6 +104,7 @@ const speak = () => {
   }
 };
 
+// browser check for API support
 const browserCheck = () => {
   if (
     navigator.userAgent.indexOf("Chrome") === -1 &&
@@ -111,5 +112,7 @@ const browserCheck = () => {
     navigator.userAgent.indexOf("Firefox") === -1
   ) {
     document.getElementById("alertBox").style.display = "block";
+  } else {
+    document.getElementById("alertBox").style.display = "none";
   }
 };
