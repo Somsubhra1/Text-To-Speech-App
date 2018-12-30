@@ -18,7 +18,6 @@ body {
 }
 #alertBox {
   display: none;
-  display: bl
 }
 @media screen and (max-width: 450px) {
   .heading-text {
